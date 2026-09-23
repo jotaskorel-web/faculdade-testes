@@ -1,0 +1,2 @@
+//1.1Suponha que voce tem uma lista com 128 nomes e esteja fazendo uma pesquisa binária. qual seria o máximo de etapas que você levaria para encontrar o nome desejado?
+R: 7 se dobrasse seria 14.
