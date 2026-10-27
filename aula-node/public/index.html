@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Laboratório de backend</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 32px auto;
+      padding: 0 16px;
+      color: #1e293b;
+      background: #f8fafc;
+    }
+    h1 { margin-bottom: 4px; }
+    input, select, textarea, button {
+      padding: 8px;
+      margin: 4px;
+      font: inherit;
+      max-width: 100%;
+    }
+    textarea { width: min(100%, 440px); min-height: 96px; display: block; }
+    button {
+      background: #1d4ed8;
+      color: #fff;
+      border: 0;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button.secundario { background: #475569; }
+    button.perigo { background: #b91c1c; }
+    pre {
+      background: #f1f5f9;
+      padding: 16px;
+      white-space: pre-wrap;
+    }
+    section {
+      margin: 24px 0;
+      background: #fff;
+      border: 1px solid #dbe3ee;
+      border-radius: 8px;
+      padding: 8px 16px 16px;
+    }
+    label { margin-right: 4px; }
+    .saida { margin: 8px 4px; min-height: 1.2em; }
+    table { border-collapse: collapse; width: 100%; margin-top: 12px; }
+    th, td { border: 1px solid #dbe3ee; padding: 8px; text-align: left; vertical-align: middle; }
+    .resumo { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+    .resumo div {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      padding: 12px 16px;
+      min-width: 120px;
+    }
+    .resumo strong { display: block; font-size: 1.4rem; }
+    #aviso { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Laboratório de backend</h1>
+  <p>HTML no navegador e Node.js no servidor.</p>
+  <button type="button" onclick="chamarAPI('/api/teste')">Testar servidor</button>
+
+  <section id="ex1">
+    <h2>1 Saudação</h2>
+    <label for="nome">Nome</label>
+    <input id="nome" type="text">
+    <button type="button" onclick="saudar()">Saudar</button>
+    <p class="saida" id="resultadoSaudacao"></p>
+  </section>
+
+  <section id="ex2">
+    <h2>2 Calculadora</h2>
+    <label for="numeroA">Número A</label>
+    <input id="numeroA" type="number" step="any">
+    <label for="numeroB">Número B</label>
+    <input id="numeroB" type="number" step="any">
+    <label for="operacao">Operação</label>
+    <select id="operacao">
+      <option value="somar">Somar</option>
+      <option value="subtrair">Subtrair</option>
+      <option value="multiplicar">Multiplicar</option>
+      <option value="dividir">Dividir</option>
+    </select>
+    <button type="button" onclick="calcular()">Calcular</button>
+    <p class="saida" id="resultadoCalculo"></p>
+  </section>
+
+  <section id="ex3">
+    <h2>3 Média e situação</h2>
+    <label for="nota1">Nota 1</label>
+    <input id="nota1" type="number" step="any">
+    <label for="nota2">Nota 2</label>
+    <input id="nota2" type="number" step="any">
+    <label for="nota3">Nota 3</label>
+    <input id="nota3" type="number" step="any">
+    <button type="button" onclick="verificarSituacao()">Verificar situação</button>
+    <p class="saida" id="resultadoMedia"></p>
+  </section>
+
+  <section id="ex4">
+    <h2>4 Analisador de texto</h2>
+    <label for="textoAnalise">Texto</label>
+    <textarea id="textoAnalise"></textarea>
+    <button type="button" onclick="analisarTexto()">Analisar</button>
+    <p class="saida" id="resultadoTexto"></p>
+  </section>
+
+  <section id="ex5">
+    <h2>5 Consulta de produtos</h2>
+    <label for="buscaProduto">Busca</label>
+    <input id="buscaProduto" type="text">
+    <button type="button" onclick="consultarProdutos()">Consultar</button>
+    <ul class="saida" id="resultadoProdutos"></ul>
+  </section>
+
+  <section id="ex6">
+    <h2>6 Sorteio</h2>
+    <label for="nomesSorteio">Nomes (um por linha)</label>
+    <textarea id="nomesSorteio"></textarea>
+    <button type="button" onclick="sortear()">Sortear</button>
+    <p class="saida" id="resultadoSorteio"></p>
+  </section>
+
+  <section id="ex7">
+    <h2>7 Contador compartilhado</h2>
+    <button type="button" onclick="consultarContador()">Consultar</button>
+    <button type="button" onclick="incrementarContador()">Incrementar</button>
+    <button type="button" class="secundario" onclick="zerarContador()">Zerar</button>
+    <p class="saida" id="resultadoContador"></p>
+  </section>
+
+  <section id="ex8">
+    <h2>8 a 10 Tarefas</h2>
+    <label for="tituloTarefa">Título</label>
+    <input id="tituloTarefa" type="text" maxlength="80">
+    <button type="button" onclick="adicionarTarefa()">Adicionar</button>
+    <button type="button" class="secundario" onclick="listarTarefas()">Atualizar lista</button>
+    <label for="filtroStatus">Situação</label>
+    <select id="filtroStatus" onchange="listarTarefas()">
+      <option value="todas">Todas</option>
+      <option value="pendentes">Pendentes</option>
+      <option value="concluidas">Concluídas</option>
+    </select>
+    <p id="aviso"></p>
+    <div class="resumo" id="painelResumo">
+      <div>Total <strong id="resumoTotal">0</strong></div>
+      <div>Concluídas <strong id="resumoConcluidas">0</strong></div>
+      <div>Pendentes <strong id="resumoPendentes">0</strong></div>
+    </div>
+    <div id="listaTarefas"></div>
+  </section>
+
+  <h2>Resposta do servidor</h2>
+  <pre id="resultado" aria-live="polite">Aguardando...</pre>
+  <script src="app.js"></script>
+</body>
+</html>
