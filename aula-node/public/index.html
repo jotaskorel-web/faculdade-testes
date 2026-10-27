@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Laboratório de backend</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%231d4ed8'/></svg>">
   <style>
     * { box-sizing: border-box; }
     body {
@@ -44,6 +45,13 @@
       padding: 8px 16px 16px;
     }
     label { margin-right: 4px; }
+    .campo {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin: 4px 12px 4px 0;
+    }
+    .campo input, .campo select { margin: 0; }
     .saida { margin: 8px 4px; min-height: 1.2em; }
     table { border-collapse: collapse; width: 100%; margin-top: 12px; }
     th, td { border: 1px solid #dbe3ee; padding: 8px; text-align: left; vertical-align: middle; }
@@ -74,29 +82,41 @@
 
   <section id="ex2">
     <h2>2 Calculadora</h2>
-    <label for="numeroA">Número A</label>
-    <input id="numeroA" type="number" step="any">
-    <label for="numeroB">Número B</label>
-    <input id="numeroB" type="number" step="any">
-    <label for="operacao">Operação</label>
-    <select id="operacao">
-      <option value="somar">Somar</option>
-      <option value="subtrair">Subtrair</option>
-      <option value="multiplicar">Multiplicar</option>
-      <option value="dividir">Dividir</option>
-    </select>
+    <span class="campo">
+      <label for="numeroA">Número A</label>
+      <input id="numeroA" type="number" step="any">
+    </span>
+    <span class="campo">
+      <label for="numeroB">Número B</label>
+      <input id="numeroB" type="number" step="any">
+    </span>
+    <span class="campo">
+      <label for="operacao">Operação</label>
+      <select id="operacao">
+        <option value="somar">Somar</option>
+        <option value="subtrair">Subtrair</option>
+        <option value="multiplicar">Multiplicar</option>
+        <option value="dividir">Dividir</option>
+      </select>
+    </span>
     <button type="button" onclick="calcular()">Calcular</button>
     <p class="saida" id="resultadoCalculo"></p>
   </section>
 
   <section id="ex3">
     <h2>3 Média e situação</h2>
-    <label for="nota1">Nota 1</label>
-    <input id="nota1" type="number" step="any">
-    <label for="nota2">Nota 2</label>
-    <input id="nota2" type="number" step="any">
-    <label for="nota3">Nota 3</label>
-    <input id="nota3" type="number" step="any">
+    <span class="campo">
+      <label for="nota1">Nota 1</label>
+      <input id="nota1" type="number" step="any">
+    </span>
+    <span class="campo">
+      <label for="nota2">Nota 2</label>
+      <input id="nota2" type="number" step="any">
+    </span>
+    <span class="campo">
+      <label for="nota3">Nota 3</label>
+      <input id="nota3" type="number" step="any">
+    </span>
     <button type="button" onclick="verificarSituacao()">Verificar situação</button>
     <p class="saida" id="resultadoMedia"></p>
   </section>
@@ -135,16 +155,20 @@
 
   <section id="ex8">
     <h2>8 a 10 Tarefas</h2>
-    <label for="tituloTarefa">Título</label>
-    <input id="tituloTarefa" type="text" maxlength="80">
+    <span class="campo">
+      <label for="tituloTarefa">Título</label>
+      <input id="tituloTarefa" type="text" maxlength="80">
+    </span>
     <button type="button" onclick="adicionarTarefa()">Adicionar</button>
     <button type="button" class="secundario" onclick="listarTarefas()">Atualizar lista</button>
-    <label for="filtroStatus">Situação</label>
-    <select id="filtroStatus" onchange="listarTarefas()">
-      <option value="todas">Todas</option>
-      <option value="pendentes">Pendentes</option>
-      <option value="concluidas">Concluídas</option>
-    </select>
+    <span class="campo">
+      <label for="filtroStatus">Situação</label>
+      <select id="filtroStatus" onchange="listarTarefas()">
+        <option value="todas">Todas</option>
+        <option value="pendentes">Pendentes</option>
+        <option value="concluidas">Concluídas</option>
+      </select>
+    </span>
     <p id="aviso"></p>
     <div class="resumo" id="painelResumo">
       <div>Total <strong id="resumoTotal">0</strong></div>
