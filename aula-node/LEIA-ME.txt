@@ -1,0 +1,39 @@
+Nome: José Pedro
+RA: 0222825739
+
+Programação Web 2 — Backend com Node.js e Express
+Pasta do projeto: aula-node
+
+Como iniciar no laboratório (Windows, disco D:)
+1. O Node.js portátil deve estar em D:\nodejs\node.exe.
+2. Copie esta pasta para D:\aula-node.
+3. Dê dois cliques em abrir-terminal.bat.
+4. Na primeira vez, ou se a pasta node_modules não existir, execute:
+   npm install
+5. Inicie o servidor:
+   node servidor.js
+6. Abra no navegador:
+   http://127.0.0.1:3000
+7. Para parar o servidor, use Ctrl+C na janela do terminal.
+8. Depois de alterar servidor.js, pare o processo e execute node servidor.js de novo.
+   Depois de alterar a página ou o app.js, atualize o navegador.
+
+Como iniciar neste repositório (Linux ou macOS)
+1. Entre na pasta aula-node.
+2. Execute npm install.
+3. Execute node servidor.js.
+4. Abra http://127.0.0.1:3000.
+
+Lista 2 — Biblioteca da turma
+Abra http://127.0.0.1:3000/continuacao.html
+As respostas de "Explique com suas palavras" estão em RESPOSTAS.txt.
+O ZIP dessa lista deve se chamar 0222825739_JosePedro_Node_Lista2.zip.
+
+Não envie a pasta node_modules no ZIP. Ela é recriada com npm install.
+Não há banco de dados: contador e tarefas ficam só na memória do processo.
+
+Exercício 7 — por que atualizar a página preserva o contador, mas reiniciar o Node.js apaga o valor?
+
+O contador é a variável contador, declarada uma vez em servidor.js, fora das rotas. Ela pertence ao processo do Node.js que está em execução. Atualizar a página só recarrega HTML, CSS e JavaScript no navegador. O processo do servidor continua o mesmo, então a variável guarda o último valor e a consulta seguinte devolve esse número.
+
+Reiniciar o servidor encerra esse processo e começa outro. O programa é lido de novo, let contador = 0 roda outra vez e o valor anterior deixa de existir. O mesmo vale para o array de tarefas. Nada é gravado em arquivo, banco ou localStorage.

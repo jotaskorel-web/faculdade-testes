@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Biblioteca da turma</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%231d4ed8'/></svg>">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 24px auto;
+      padding: 0 16px;
+      color: #1e293b;
+      background: #f8fafc;
+    }
+    section {
+      margin: 24px 0;
+      background: #fff;
+      border: 1px solid #dbe3ee;
+      border-radius: 8px;
+      padding: 8px 16px 16px;
+    }
+    input, select, button {
+      padding: 8px;
+      margin: 4px;
+      font: inherit;
+      max-width: 100%;
+    }
+    button {
+      background: #1d4ed8;
+      color: #fff;
+      border: 0;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button.secundario { background: #475569; }
+    pre {
+      background: #f1f5f9;
+      padding: 12px;
+      white-space: pre-wrap;
+    }
+    .campo {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin: 4px 12px 4px 0;
+    }
+    a { color: #1d4ed8; }
+  </style>
+</head>
+<body>
+  <h1>Biblioteca da turma</h1>
+  <p><a href="index.html">Voltar à lista 1</a></p>
+
+  <section id="ex1">
+    <h2>1 Ficha da biblioteca</h2>
+    <button type="button" onclick="consultarBiblioteca()">Consultar biblioteca</button>
+    <p id="fichaBiblioteca"></p>
+  </section>
+
+  <section id="ex2">
+    <h2>2 Prazo de empréstimo</h2>
+    <label for="perfilLeitor">Perfil</label>
+    <select id="perfilLeitor">
+      <option value="aluno">Aluno</option>
+      <option value="professor">Professor</option>
+      <option value="funcionario">Funcionário</option>
+    </select>
+    <button type="button" onclick="consultarPrazo()">Consultar prazo</button>
+  </section>
+
+  <section id="ex3">
+    <h2>3 Consulta de livro</h2>
+    <label for="codigoLivro">Código do livro</label>
+    <input id="codigoLivro" type="number" step="1">
+    <button type="button" onclick="buscarLivro()">Buscar livro</button>
+  </section>
+
+  <section id="ex4">
+    <h2>4 Disponibilidade</h2>
+    <label for="quantidadeExemplares">Exemplares</label>
+    <input id="quantidadeExemplares" type="number" step="1">
+    <button type="button" onclick="verificarDisponibilidade()">Verificar disponibilidade</button>
+  </section>
+
+  <section id="ex5">
+    <h2>5 Preferência de avisos</h2>
+    <label>
+      <input id="receberAvisos" type="checkbox">
+      Desejo receber avisos
+    </label>
+    <button type="button" onclick="enviarPreferencia()">Conferir preferência</button>
+  </section>
+
+  <section id="ex6">
+    <h2>6 Orçamento de cópias</h2>
+    <label for="quantidadeCopias">Quantidade</label>
+    <input id="quantidadeCopias" type="number" step="1">
+    <button type="button" onclick="calcularCopias()">Calcular</button>
+    <p id="totalCopias"></p>
+  </section>
+
+  <section id="ex7">
+    <h2>7 Conferência de reserva</h2>
+    <label for="nomeReserva">Nome do leitor</label>
+    <input id="nomeReserva" type="text">
+    <label for="tituloReserva">Título desejado</label>
+    <input id="tituloReserva" type="text">
+    <button type="button" onclick="conferirReserva()">Conferir</button>
+  </section>
+
+  <section id="ex8">
+    <h2>8 Aviso da biblioteca</h2>
+    <label for="textoAviso">Novo aviso</label>
+    <input id="textoAviso" type="text">
+    <button type="button" onclick="salvarAviso()">Guardar aviso</button>
+    <button type="button" class="secundario" onclick="consultarAviso()">Consultar aviso</button>
+    <button type="button" class="secundario" onclick="usarAvisoPadrao()">Usar aviso padrão</button>
+  </section>
+
+  <section id="ex9">
+    <h2>9 Gêneros literários</h2>
+    <button type="button" onclick="listarGeneros()">Listar gêneros</button>
+    <ol id="listaGeneros"></ol>
+  </section>
+
+  <section id="ex10">
+    <h2>10 Sugestões de leitura</h2>
+    <label for="tituloSugestao">Título</label>
+    <input id="tituloSugestao" type="text">
+    <button type="button" onclick="adicionarSugestao()">Adicionar</button>
+    <button type="button" class="secundario" onclick="listarSugestoes()">Consultar lista</button>
+    <p id="situacaoSugestoes"></p>
+    <ul id="listaSugestoes"></ul>
+  </section>
+
+  <h2>Última resposta da API</h2>
+  <pre id="resultado" aria-live="polite">Aguardando...</pre>
+  <script src="continuacao.js"></script>
+</body>
+</html>
