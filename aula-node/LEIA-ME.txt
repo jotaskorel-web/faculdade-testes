@@ -24,6 +24,11 @@ Como iniciar neste repositório (Linux ou macOS)
 3. Execute node servidor.js.
 4. Abra http://127.0.0.1:3000.
 
+Lista 2 — Biblioteca da turma
+Abra http://127.0.0.1:3000/continuacao.html
+As respostas de "Explique com suas palavras" estão em RESPOSTAS.txt.
+O ZIP dessa lista deve se chamar 0222825739_JosePedro_Node_Lista2.zip.
+
 Não envie a pasta node_modules no ZIP. Ela é recriada com npm install.
 Não há banco de dados: contador e tarefas ficam só na memória do processo.
 

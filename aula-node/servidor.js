@@ -221,6 +221,180 @@ app.delete("/api/tarefas/:id", (req, res) => {
   res.json({ mensagem: "Tarefa excluída." });
 });
 
+app.get("/api/biblioteca", (req, res) => {
+  res.json({
+    nome: "Biblioteca da Turma",
+    horario: "Das 8h às 22h",
+    local: "Bloco A",
+    telefone: "Ramal 123",
+  });
+});
+
+app.get("/api/prazo", (req, res) => {
+  const perfil = req.query.perfil;
+  let dias;
+  if (perfil === "aluno") {
+    dias = 7;
+  } else if (perfil === "professor") {
+    dias = 14;
+  } else if (perfil === "funcionario") {
+    dias = 10;
+  } else {
+    return res.status(400).json({
+      erro: "Selecione aluno, professor ou funcionário.",
+    });
+  }
+  res.json({ perfil: perfil, dias: dias });
+});
+
+const livros = [
+  { codigo: 1, titulo: "HTML na Prática" },
+  { codigo: 2, titulo: "Primeiros Passos com JavaScript" },
+  { codigo: 3, titulo: "Introdução ao Node" },
+  { codigo: 4, titulo: "CSS para Iniciantes" },
+];
+
+app.get("/api/livro/:codigo", (req, res) => {
+  const codigo = Number(req.params.codigo);
+  if (!Number.isInteger(codigo) || codigo <= 0) {
+    return res.status(400).json({ erro: "Código inválido." });
+  }
+  const livro = livros.find((item) => item.codigo === codigo);
+  if (livro === undefined) {
+    return res.status(404).json({ erro: "Livro não encontrado." });
+  }
+  res.json(livro);
+});
+
+app.post("/api/disponibilidade", (req, res) => {
+  const quantidade = lerNumero(req.body?.quantidade);
+  if (!Number.isInteger(quantidade) || quantidade < 0) {
+    return res.status(400).json({
+      erro: "Informe uma quantidade inteira maior ou igual a zero.",
+    });
+  }
+  let mensagem = "Nenhum exemplar disponível.";
+  let situacao = "Sem estoque";
+  if (quantidade === 1) {
+    mensagem = "Há exemplar disponível.";
+    situacao = "Último exemplar";
+  } else if (quantidade > 1) {
+    mensagem = "Há exemplar disponível.";
+    situacao = "Disponível";
+  }
+  res.json({
+    quantidade: quantidade,
+    disponivel: quantidade > 0,
+    mensagem: mensagem,
+    situacao: situacao,
+  });
+});
+
+app.post("/api/preferencia", (req, res) => {
+  const receberAvisos = req.body?.receberAvisos;
+  if (typeof receberAvisos !== "boolean") {
+    return res.status(400).json({
+      erro: "A preferência deve ser true ou false.",
+    });
+  }
+  let mensagem = "Você não deseja receber avisos.";
+  if (receberAvisos) {
+    mensagem = "Você deseja receber avisos.";
+  }
+  res.json({
+    receberAvisos: receberAvisos,
+    mensagem: mensagem,
+    status: receberAvisos ? "Ativada" : "Desativada",
+  });
+});
+
+app.post("/api/copias", (req, res) => {
+  const quantidade = lerNumero(req.body?.quantidade);
+  if (!Number.isInteger(quantidade) || quantidade < 1 || quantidade > 500) {
+    return res.status(400).json({
+      erro: "Informe de 1 a 500 cópias, sem frações.",
+    });
+  }
+  const precoCentavos = 30;
+  const totalCentavos = quantidade * precoCentavos;
+  res.json({
+    quantidade: quantidade,
+    precoCentavos: precoCentavos,
+    totalCentavos: totalCentavos,
+  });
+});
+
+app.post("/api/conferir-reserva", (req, res) => {
+  const dados = req.body;
+  if (typeof dados?.nome !== "string" || typeof dados?.titulo !== "string") {
+    return res.status(400).json({
+      erro: "Nome e título devem ser textos.",
+    });
+  }
+  const nome = dados.nome.trim();
+  const titulo = dados.titulo.trim();
+  if (nome.length < 3 || titulo.length < 3) {
+    return res.status(400).json({
+      erro: "Preencha nome e título com pelo menos 3 caracteres.",
+    });
+  }
+  if (nome.length > 60 || titulo.length > 100) {
+    return res.status(400).json({
+      erro: "O nome deve ter no máximo 60 caracteres e o título no máximo 100.",
+    });
+  }
+  res.json({
+    mensagem: "Dados conferidos. Reserva ainda não gravada.",
+    nome: nome,
+    titulo: titulo,
+  });
+});
+
+let avisoBiblioteca = "Biblioteca aberta.";
+
+app.get("/api/aviso", (req, res) => {
+  res.json({ texto: avisoBiblioteca });
+});
+
+app.post("/api/aviso", (req, res) => {
+  if (typeof req.body?.texto !== "string") {
+    return res.status(400).json({ erro: "Envie um texto." });
+  }
+  const texto = req.body.texto.trim();
+  if (texto.length < 3 || texto.length > 100) {
+    return res.status(400).json({
+      erro: "O aviso deve ter de 3 a 100 caracteres.",
+    });
+  }
+  avisoBiblioteca = texto;
+  res.json({ texto: avisoBiblioteca });
+});
+
+app.get("/api/generos", (req, res) => {
+  const generos = ["Romance", "Aventura", "Tecnologia", "História"];
+  res.json(generos);
+});
+
+const sugestoes = [];
+
+app.get("/api/sugestoes", (req, res) => {
+  res.json(sugestoes);
+});
+
+app.post("/api/sugestoes", (req, res) => {
+  if (typeof req.body?.titulo !== "string") {
+    return res.status(400).json({ erro: "Envie um título." });
+  }
+  const titulo = req.body.titulo.trim();
+  if (titulo.length < 3 || titulo.length > 80) {
+    return res.status(400).json({
+      erro: "O título deve ter de 3 a 80 caracteres.",
+    });
+  }
+  sugestoes.push(titulo);
+  res.status(201).json({ titulo: titulo });
+});
+
 app.use("/api", (req, res) => {
   res.status(404).json({ erro: "Rota nao encontrada." });
 });

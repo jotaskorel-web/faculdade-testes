@@ -1,0 +1,34 @@
+Nome: José Pedro
+RA: 0222825739
+
+Lista 2 — Explique com suas palavras
+
+1. Por que mudar apenas o HTML não altera o valor devolvido por /api/biblioteca?
+A rota /api/biblioteca responde com os dados escritos em servidor.js. O HTML só mostra o que o servidor devolve. Se eu alterar só a página, o JSON continua igual, porque a consulta não lê o arquivo HTML.
+
+2. Se uma pessoa mudar a URL manualmente, a seleção do HTML é suficiente para proteger a regra?
+Não. O select só limita o que o formulário oferece. Alguém pode abrir /api/prazo?perfil=visitante direto no navegador. A regra dos dias precisa ser conferida no servidor.
+
+3. Por que o código 99 recebe uma resposta diferente de um código como abc?
+99 é um número inteiro e maior que zero, mas não existe livro com esse código, então a resposta é 404, livro não encontrado. abc não é um inteiro válido, então a resposta é 400, código inválido.
+
+4. Qual problema surgiria se você convertesse o campo vazio usando somente Number("")?
+Number("") resulta em 0. Um campo em branco seria tratado como quantidade zero, que neste exercício é um valor aceito, e o servidor não avisaria que a pessoa deixou o campo vazio.
+
+5. Qual é a diferença entre checked e value em uma caixa de seleção?
+checked diz se a caixa está marcada e vale true ou false. value é o texto associado ao campo, e não informa se ela foi marcada.
+
+6. Por que o servidor não deve aceitar um precoCentavos escolhido pela página?
+Quem usa a página poderia enviar qualquer preço e alterar o orçamento. O valor de cada cópia é uma regra do sistema, então só o servidor deve defini-lo.
+
+7. Por que o número de caracteres deve ser conferido depois de remover os espaços das pontas?
+Os espaços das pontas não fazem parte do nome nem do título. Um texto como "  ab  " parece maior antes do trim e fica curto demais depois. O mínimo e o máximo valem para o texto que realmente será usado.
+
+8. Por que atualizar o navegador mantém o aviso, mas reiniciar o servidor restaura o texto inicial?
+O aviso fica na variável avisoBiblioteca, na memória do processo Node.js. Atualizar a página só recarrega o HTML e o JavaScript no navegador. Reiniciar o Node executa de novo a declaração inicial e o texto volta a "Biblioteca aberta.".
+
+9. Qual linha impede que os itens sejam duplicados a cada clique?
+A linha lista.textContent = "" esvazia a lista antes de criar os itens de novo. Sem ela, cada clique acrescentaria outra cópia dos gêneros.
+
+10. Por que listarSugestoes precisa ser chamada depois que o POST termina, e não antes?
+Antes do POST terminar, o título novo ainda não entrou no array do servidor. A consulta feita depois lê a lista já atualizada e monta os itens que existem naquele momento.
